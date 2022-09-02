@@ -19,8 +19,20 @@ const clearbtn = document.querySelector('.clear-btn');
 //5
 //imposta la chiave api e la regione per l'utente
 
-//4
-// gestisce l'invio del form
+function handleSubmit (e) {
+    e.preventDefault();
+    setUpUser(apiKey.value, region.value);
+}
+
+function setUpUser (apiKey, regionName) {
+    localStorage.setItem('apiKey', apiKey);
+    localStorage.setItem('regionName', regionName);
+    loading.style.display = 'block';
+    errors.textContent = '';
+    clearbtn.style.display = 'block';
+
+    displayCarbonUsage(apiKey, regionName);
+}
 
 function init () {
     // if anything is in local storage, pick it up
