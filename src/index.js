@@ -1,3 +1,5 @@
+import axios from '../node_modules/axios';
+
 // form fields
 const form = document.querySelector('.form-data');
 const region = document.querySelector('.region-name');
@@ -16,8 +18,34 @@ const clearbtn = document.querySelector('.clear-btn');
 //6
 //chiamata API
 
-//5
-//imposta la chiave api e la regione per l'utente
+async function displayCarbonUsage (apiKey, regionName) {
+    try {
+        await axios.get('https://api.co2signal.com/v1/latest', {
+            params: {
+                countryCode: regionName,
+            },
+            headers: {
+                'auth-token': apiKey,
+            },
+        }).then((response) => {
+            let CO2 = Math.floor(response.data.data.carbonIntensity);
+
+            // calculateColor(CO2);
+
+            loading.style.display = 'none';
+            form.style.display = 'none';
+            myregion.textContent = regionName;
+            usage.textContent = Math.round(response.data.data.carbonIntensity) + ' grams (grams C02 emitted per kilowatt hour)';
+            fossilfuel.textContent = response.data.data.fossilFuelPercentage.toFixed(2) + '% (percentage of fossil fuels used to generate electricity)';
+            results.style.display = 'block';
+        });
+    } catch (error) {
+        console.log(error);
+        loading.style.display = 'none';
+        results.style.display = 'none';
+        errors.textContent = 'Sorry, we have no data for the region you have requested.';
+    }
+}
 
 function handleSubmit (e) {
     e.preventDefault();
