@@ -1,4 +1,3 @@
-//1
 // form fields
 const form = document.querySelector('.form-data');
 const region = document.querySelector('.region-name');
@@ -23,9 +22,34 @@ const clearbtn = document.querySelector('.clear-btn');
 //4
 // gestisce l'invio del form
 
-//3 controlli iniziali
+function init () {
+    // if anything is in local storage, pick it up
+    const storedApiKey = localStorage.getItem('apiKey');
+    const storedRegion = localStorage.getItem('regionName');
 
-//2
+    // set icon to be generic green
+    // TODO
+
+    if (storedApiKey === null || storedRegion === null){
+        form.style.display = 'block';
+        results.style.display = 'none';
+        loading.style.display = 'none';
+        clearbtn.style.display = 'none';
+        errors.textContent = '';
+    } else {
+        displayCarbonUsage(storedApiKey, storedRegion);
+        results.style.display = 'none';
+        form.style.display = 'none';
+        clearbtn.style.display = 'block';
+    }
+};
+
+function reset (e) {
+    e.preventDefault();
+    localStorage.removeItem('regionName');
+    init();
+}
+
 // listeners
 form.addEventListener('submit', (e) => handleSubmit(e));
 clearbtn.addEventListener('click', (e) => reset(e));
