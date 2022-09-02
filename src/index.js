@@ -26,4 +26,7 @@ const clearbtn = document.querySelector('.clear-btn');
 //3 controlli iniziali
 
 //2
-// imposta i listeners e la partenza dell'app
+// listeners
+form.addEventListener('submit', (e) => handleSubmit(e));
+clearbtn.addEventListener('click', (e) => reset(e));
+init();
