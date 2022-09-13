@@ -83,7 +83,12 @@ function init () {
     const storedRegion = localStorage.getItem('regionName');
 
     // set icon to be generic green
-    // TODO
+    chrome.runtime.sendMessage({
+        action: 'updateIcon',
+        value: {
+            color: 'green',
+        }
+    })
 
     if (storedApiKey === null || storedRegion === null){
         form.style.display = 'block';
