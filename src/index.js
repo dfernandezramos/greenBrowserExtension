@@ -30,6 +30,7 @@ function calculateColor (value) {
     let closestColor = colors[scaleIndex];
     console.log(scaleIndex, closestColor);
 
+    console.log('Sending updateIconMessage with value: ' + closestColor);
     chrome.runtime.sendMessage({ action: 'updateIcon', value: { color: closestColor }});
 }
 
